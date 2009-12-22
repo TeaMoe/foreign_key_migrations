@@ -1,4 +1,4 @@
-module RedHillConsulting::ForeignKeyMigrations::ActiveRecord::ConnectionAdapters
+module ForeignKeyMigrations::ActiveRecord::ConnectionAdapters
   module TableDefinition
     def self.included(base)
       base.class_eval do

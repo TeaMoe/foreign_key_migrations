@@ -1,4 +1,4 @@
-module RedHillConsulting::ForeignKeyMigrations::ActiveRecord
+module ForeignKeyMigrations::ActiveRecord
   module Base
     def self.included(base)
       base.extend(ClassMethods)
