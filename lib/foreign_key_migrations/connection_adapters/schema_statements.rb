@@ -13,8 +13,7 @@ module ForeignKeyMigrations::ConnectionAdapters::SchemaStatements
     @table_definition.column_definitions.each do |column_params|
       column_name = column_params.first
       column_options = column_params.last
-      references = ForeignKeyMigrations.references(table_name, column_name, column_options)
-      add_foreign_key table_name, references.first, column_options.merge(:column => column_name) if references
+      ForeignKeyMigrations.add_foreign_key self, table_name, column_name, column_options
     end
 
   end

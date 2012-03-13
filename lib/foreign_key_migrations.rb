@@ -20,6 +20,26 @@ module ForeignKeyMigrations
       [$1.pluralize, :id]
     end
   end
+
+  def add_foreign_key adapter, table_name, column_name, column_options
+    references = ForeignKeyMigrations.references(table_name, column_name, column_options)
+    convert_legacy_options!(column_options)
+    adapter.add_foreign_key table_name, references.first, column_options.merge(:column => column_name) if references
+  end
+
+  def convert_legacy_options! options
+    on_delete = options.delete :on_delete
+    if on_delete
+      options[:dependent] = case on_delete
+                            when :set_null
+                              :nullify
+                            when :cascade
+                              :delete
+                            else
+                              on_delete
+                            end
+    end
+  end
 end
 
 require 'foreign_key_migrations/railtie' if defined?(Rails)
